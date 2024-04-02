@@ -1,4 +1,5 @@
 import { check } from "express-validator";
+import resultadoValidacion from "./resultadoValidacion";
 
 const validacionesUsuario = [
   check("nombre")
@@ -36,6 +37,9 @@ const validacionesUsuario = [
     .withMessage(
       'El tipo de usuario debe ser una de las siguientes opciones "admin", "usuario".'
     ),
+  (req, res, next) => {
+    resultadoValidacion(req, res, next);
+  },
 ];
 
 export default validacionesUsuario;
