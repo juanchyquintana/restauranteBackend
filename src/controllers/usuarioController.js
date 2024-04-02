@@ -1,6 +1,6 @@
-import Usuario from "../database/models/Usuario";
+import Usuario from "../database/models/Usuario.js";
 
-const editarUsuario = async (req, res) => {
+export const editarUsuario = async (req, res) => {
   try {
     const buscarProducto = await Usuario.findById(req.params.id);
     if (!buscarProducto) {
