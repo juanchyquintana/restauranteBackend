@@ -30,7 +30,7 @@ const usuarioSchema = new mongoose.Schema({
   estado: {
     type: String,
     enum: ["activo", "inactivo"],
-    default: "Activo",
+    default: "activo",
   },
   tipoUsuario: {
     type: String,
