@@ -10,7 +10,13 @@ const obtenerPedidos = async (req, res) => {
     }
 }
 
+const editarPedido = async (req, res) => {}
+
+const validarPedidos = async (req, res, next) => {}
+
 
 export {
-    obtenerPedidos
+    obtenerPedidos,
+    validarPedidos,
+    editarPedido
 }
