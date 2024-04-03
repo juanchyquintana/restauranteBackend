@@ -25,11 +25,8 @@ const editarPedido = async (req, res) => {
     }
 }
 
-const validarPedidos = async (req, res, next) => {}
-
 
 export {
     obtenerPedidos,
-    validarPedidos,
     editarPedido
 }
