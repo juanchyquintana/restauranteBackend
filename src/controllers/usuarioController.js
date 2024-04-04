@@ -23,7 +23,7 @@ export const obtenerUsuario = async (req, res) => {
   try {
     console.log(req.params.id);
     //si encontre el usuario
-    const usuarioBuscado = await Producto.findById(req.params.id);
+    const usuarioBuscado = await Usuario.findById(req.params.id);
     res.status(200).json(usuarioBuscado);
   } catch (error) {
     console.log(error);
