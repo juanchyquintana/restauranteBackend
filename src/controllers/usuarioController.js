@@ -31,6 +31,16 @@ export const obtenerUsuario = async (req, res) => {
   }
 };
 
+export const verUsuarios = async (req, res) => {
+  try {
+    const usuarios = await Usuario.find();
+    res.status(200).json(usuarios);
+  } catch (error){
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error al obtener usuarios' });
+  }
+};
+
 export const borrarUsuario = async (req, res) => {
   try {
     const buscarUsuario = await Usuario.findById(req.params.id);
