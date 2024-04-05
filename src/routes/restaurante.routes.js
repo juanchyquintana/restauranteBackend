@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { editarUsuario, obtenerUsuario } from '../controllers/usuarioController.js';
+import { borrarUsuario, editarUsuario, obtenerUsuario } from '../controllers/usuarioController.js';
 import { obtenerPedidos, editarPedido } from '../controllers/pedidosController.js';
 
 import validacionesUsuario from '../helpers/validacionUsuario.js';
@@ -8,7 +8,7 @@ import validacionPedidos from '../helpers/validacionPedidos.js';
 const router = Router();
 
 router.route("/usuarios")
-router.route("/usuario/:id").put([validacionesUsuario], editarUsuario).get(obtenerUsuario)
+router.route("/usuario/:id").put([validacionesUsuario], editarUsuario).get(obtenerUsuario).delete(borrarUsuario)
 router.route("/productos")
 
 

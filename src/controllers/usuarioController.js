@@ -30,3 +30,24 @@ export const obtenerUsuario = async (req, res) => {
     res.status(404).json({ mensaje: "No se encontro el usuario solicitado" });
   }
 };
+
+export const borrarUsuario = async (req, res) => {
+  try {
+    const buscarUsuario = await Usuario.findById(req.params.id);
+    if (!buscarUsuario) {
+      return res
+        .status(404)
+        .json({
+          mensaje: "No se pudo eliminar el usuario, el id es incorrecto.",
+        });
+    }
+    await Usuario.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ mensaje: "El usuario fue eliminado exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrio un error al intentar borrar el usuario" });
+  }
+};
