@@ -40,3 +40,14 @@ export const verUsuarios = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al obtener usuarios' });
   }
 };
+
+export const crearUsuario = async (req, res) => {
+  try {
+    const nuevoUsuario = new Usuario(req.body);
+    await nuevoUsuario.save();
+    res.status(201).json({ mensaje: "Usuario creado exitosamente", usuario: nuevoUsuario });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: "Ocurrió un error al intentar crear un usuario" });
+  }
+};
