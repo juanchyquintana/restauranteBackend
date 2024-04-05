@@ -30,3 +30,13 @@ export const obtenerUsuario = async (req, res) => {
     res.status(404).json({ mensaje: "No se encontro el usuario solicitado" });
   }
 };
+
+export const verUsuarios = async (req, res) => {
+  try {
+    const usuarios = await Usuario.find();
+    res.status(200).json(usuarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error al obtener usuarios' });
+  }
+};
