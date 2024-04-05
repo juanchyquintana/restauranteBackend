@@ -35,9 +35,22 @@ export const verUsuarios = async (req, res) => {
   try {
     const usuarios = await Usuario.find();
     res.status(200).json(usuarios);
-  } catch (error){
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ mensaje: 'Error al obtener usuarios' });
+    res.status(500).json({ mensaje: "Error al obtener usuarios" });
+  }
+};
+
+export const crearUsuario = async (req, res) => {
+  try {
+    console.log(req.body);
+    const nuevoUsuario = new Usuario(req.body);
+    await nuevoUsuario.save();
+    res
+      .status(201)
+      .json({ mensaje: "Usuario creado exitosamente", usuario: nuevoUsuario });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -45,11 +58,9 @@ export const borrarUsuario = async (req, res) => {
   try {
     const buscarUsuario = await Usuario.findById(req.params.id);
     if (!buscarUsuario) {
-      return res
-        .status(404)
-        .json({
-          mensaje: "No se pudo eliminar el usuario, el id es incorrecto.",
-        });
+      return res.status(404).json({
+        mensaje: "No se pudo eliminar el usuario, el id es incorrecto.",
+      });
     }
     await Usuario.findByIdAndDelete(req.params.id);
 
