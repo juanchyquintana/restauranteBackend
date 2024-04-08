@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 const validarJWT = (req, res, next) => {
   //recibir el token
-  console.log(req.header);
+  // console.log(req.header);
   const token = req.header("x-token");
   if (!token) {
     //401 error en la autenticacion

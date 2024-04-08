@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { editarUsuario, obtenerUsuario, crearUsuario,  borrarUsuario, verUsuarios } from '../controllers/usuarioController.js';
-import { editarProducto } from '../controllers/productoController.js';
+import { editarProducto, obtenerProducto } from '../controllers/productoController.js';
 import { obtenerPedidos, editarPedido } from '../controllers/pedidosController.js';
 import validacionesUsuario from '../helpers/validacionUsuario.js';
 import validacionProducto from '../helpers/validacionProducto.js';
@@ -12,7 +12,7 @@ router.route("/usuarios").get(verUsuarios).post(validacionesUsuario, crearUsuari
 router.route("/usuarios/:id").put([validacionesUsuario], editarUsuario).get(obtenerUsuario).delete(borrarUsuario)
 
 router.route("/productos")
-router.route("/productos/:id").put([validacionProducto] ,editarProducto)
+router.route("/productos/:id").put([validacionProducto] ,editarProducto).get(obtenerProducto)
 
 router.route("/pedidos")
     .get(obtenerPedidos)
