@@ -3,6 +3,7 @@ import { editarUsuario, obtenerUsuario, crearUsuario,  borrarUsuario, verUsuario
 import { editarProducto } from '../controllers/productoController.js';
 import { obtenerPedidos, editarPedido } from '../controllers/pedidosController.js';
 import validacionesUsuario from '../helpers/validacionUsuario.js';
+import validacionProducto from '../helpers/validacionProducto.js';
 import validacionPedidos from '../helpers/validacionPedidos.js';
 
 const router = Router();
@@ -11,7 +12,7 @@ router.route("/usuarios").get(verUsuarios).post(validacionesUsuario, crearUsuari
 router.route("/usuarios/:id").put([validacionesUsuario], editarUsuario).get(obtenerUsuario).delete(borrarUsuario)
 
 router.route("/productos")
-router.route("/productos/:id").put(editarProducto)
+router.route("/productos/:id").put([validacionProducto] ,editarProducto)
 
 router.route("/pedidos")
     .get(obtenerPedidos)
