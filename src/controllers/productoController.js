@@ -29,4 +29,4 @@ const listarProductos = async (req, res) => {
 
 
 export { editarProducto };
-export { listarProductos }
+export { listarProductos };
