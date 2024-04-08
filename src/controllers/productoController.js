@@ -38,6 +38,20 @@ const listarProductos = async (req, res) => {
   }
 };
 
+const crearProducto = async (req, res) => {
+  try {
+    const productoNuevo = new Producto(req.body);
+    await productoNuevo.save();
+    res.status(201).json({
+      mensaje: "El producto fue creado correctamente",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      mensaje: "No se pudo procesar la solicitud de crear producto",
+    });
+  }
+};
 
-export { editarProducto, obtenerProducto, listarProductos };
+export { editarProducto, obtenerProducto, listarProductos, crearProducto };
 
