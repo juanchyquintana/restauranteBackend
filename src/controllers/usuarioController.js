@@ -1,5 +1,6 @@
 import Usuario from "../database/models/Usuario.js";
 import bcrypt from "bcrypt";
+import generarJWT from "../helpers/generarJWT.js";
 
 const editarUsuario = async (req, res) => {
   try {
@@ -84,7 +85,17 @@ const iniciarSesion = async (req, res) => {
     if (!passwordValido) {
       return res.status(400).json({ mensaje: "Password Incorrecto!" });
     }
-  } catch (error) {}
+
+    const token = await generarJWT(existeUsuario._id, existeUsuario.email);
+    res.status(200).json({
+      mensaje: "¡Bienvenido! Sus Datos son correctos.",
+      email,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: "Error al Intentar Loguear al Usuario" });
+  }
 };
 
 export {
