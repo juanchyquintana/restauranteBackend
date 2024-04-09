@@ -1,4 +1,5 @@
 import Usuario from "../database/models/Usuario.js";
+import bcrypt from 'bcrypt'
 
 const editarUsuario = async (req, res) => {
   try {
@@ -71,7 +72,24 @@ const borrarUsuario = async (req, res) => {
 };
 
 const iniciarSesion = async (req, res) => {
-  res.send('funciona la ruta')
+
+  try {
+    const { email, password } = req.body;
+    const existeUsuario = await Usuario.findOne({ email })
+    const passwordValido = bcrypt.compareSync(password, existeUsuario.password)
+
+    if(!existeUsuario) {
+      return res.status(400).json({ mensaje: 'Correo Incorrecto!'})
+    }
+
+    if(!passwordValido) {
+      return res.status(400).json({ mensaje: 'Password Incorrecto!'})
+    }
+
+    
+  } catch (error) {
+    
+  }
 }
 
 export {
