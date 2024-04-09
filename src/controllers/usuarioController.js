@@ -1,6 +1,6 @@
 import Usuario from "../database/models/Usuario.js";
 
-export const editarUsuario = async (req, res) => {
+const editarUsuario = async (req, res) => {
   try {
     const buscarUsuario = await Usuario.findById(req.params.id);
     if (!buscarUsuario) {
@@ -19,10 +19,8 @@ export const editarUsuario = async (req, res) => {
   }
 };
 
-export const obtenerUsuario = async (req, res) => {
+const obtenerUsuario = async (req, res) => {
   try {
-    console.log(req.params.id);
-    //si encontre el usuario
     const usuarioBuscado = await Usuario.findById(req.params.id);
     res.status(200).json(usuarioBuscado);
   } catch (error) {
@@ -31,7 +29,7 @@ export const obtenerUsuario = async (req, res) => {
   }
 };
 
-export const verUsuarios = async (req, res) => {
+const verUsuarios = async (req, res) => {
   try {
     const usuarios = await Usuario.find();
     res.status(200).json(usuarios);
@@ -41,9 +39,8 @@ export const verUsuarios = async (req, res) => {
   }
 };
 
-export const crearUsuario = async (req, res) => {
+const crearUsuario = async (req, res) => {
   try {
-    console.log(req.body);
     const nuevoUsuario = new Usuario(req.body);
     await nuevoUsuario.save();
     res
@@ -54,7 +51,7 @@ export const crearUsuario = async (req, res) => {
   }
 };
 
-export const borrarUsuario = async (req, res) => {
+const borrarUsuario = async (req, res) => {
   try {
     const buscarUsuario = await Usuario.findById(req.params.id);
     if (!buscarUsuario) {
@@ -62,8 +59,8 @@ export const borrarUsuario = async (req, res) => {
         mensaje: "No se pudo eliminar el usuario, el id es incorrecto.",
       });
     }
-    await Usuario.findByIdAndDelete(req.params.id);
 
+    await Usuario.findByIdAndDelete(req.params.id);
     res.status(200).json({ mensaje: "El usuario fue eliminado exitosamente" });
   } catch (error) {
     console.error(error);
@@ -71,4 +68,12 @@ export const borrarUsuario = async (req, res) => {
       .status(500)
       .json({ mensaje: "Ocurrio un error al intentar borrar el usuario" });
   }
+};
+
+export {
+  editarUsuario,
+  obtenerUsuario,
+  verUsuarios,
+  crearUsuario,
+  borrarUsuario,
 };

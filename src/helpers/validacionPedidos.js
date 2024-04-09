@@ -7,9 +7,7 @@ const validacionPedidos = [
     .withMessage("El usuario es un dato obligatorio.")
     .isLength({ min: 3, max: 100 })
     .withMessage("El usuario debe tener entre 3 y 100 caracteres."),
-  check("fecha")
-    .notEmpty()
-    .withMessage("La fecha es un dato obligatorio."),
+  check("fecha").notEmpty().withMessage("La fecha es un dato obligatorio."),
   check("productos")
     .isArray({ min: 1 })
     .withMessage("Debe haber al menos un producto en el pedido."),
@@ -41,7 +39,9 @@ const validacionPedidos = [
     .if((value, { req }) => req.body.tipoEntrega === "delivery"),
   check("lng")
     .notEmpty()
-    .withMessage("La longitud es un dato obligatorio para entregas a domicilio.")
+    .withMessage(
+      "La longitud es un dato obligatorio para entregas a domicilio."
+    )
     .if((value, { req }) => req.body.tipoEntrega === "delivery"),
   check("telefonoContacto")
     .notEmpty()

@@ -17,7 +17,6 @@ const editarProducto = async (req, res) => {
 
 const obtenerProducto = async (req, res) => {
   try {
-    console.log(req.params.id);
     const productoBuscado = await Producto.findById(req.params.id);
     res.status(200).json(productoBuscado);
   } catch (error) {
@@ -61,8 +60,8 @@ const borrarProducto = async (req, res) => {
         mensaje: "No se pudo eliminar el producto, el id es incorrecto.",
       });
     }
-    await Producto.findByIdAndDelete(req.params.id);
 
+    await Producto.findByIdAndDelete(req.params.id);
     res.status(200).json({ mensaje: "El producto fue eliminado exitosamente" });
   } catch (error) {
     console.error(error);

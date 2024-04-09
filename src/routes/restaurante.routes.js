@@ -29,7 +29,7 @@ const router = Router();
 router
   .route("/usuarios")
   .get(verUsuarios)
-  .post(validacionesUsuario, crearUsuario);
+  .post([validacionesUsuario], crearUsuario);
 router
   .route("/usuarios/:id")
   .put([validacionesUsuario], editarUsuario)
@@ -39,7 +39,7 @@ router
 router
   .route("/productos")
   .get(listarProductos)
-  .post(validacionProducto, crearProducto);
+  .post([validacionProducto], crearProducto);
 router
   .route("/productos/:id")
   .put([validacionProducto], editarProducto)
