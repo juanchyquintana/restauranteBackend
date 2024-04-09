@@ -49,10 +49,24 @@ const editarPedido = async (req, res) => {
     }
 }
 
+const eliminarPedido = async (req, res) => {
+    try {
+        const pedidoEliminado = await Pedido.findByIdAndDelete(req.params.id);
+        if (!pedidoEliminado) {
+            return res.status(404).json({ mensaje: 'Pedido no encontrado.' });
+        }
+        res.json({ mensaje: 'Pedido eliminado correctamente.' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensaje: 'Error al eliminar el pedido.' });
+    }
+};
+
 
 export {
     obtenerPedidos,
     editarPedido,
     crearPedido,
-    obtenerPedidoPorId
+    obtenerPedidoPorId,
+    eliminarPedido
 }

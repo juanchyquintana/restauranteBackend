@@ -43,6 +43,9 @@ router
   .route("/pedidos")
   .post([validacionPedidos], crearPedido)
   .get(obtenerPedidos);
-router.route("/pedidos/:id").put([validacionPedidos], editarPedido).get(obtenerPedidoPorId);
+router
+  .route("/pedidos/:id")
+  .put([validacionPedidos], editarPedido)
+  .get(obtenerPedidoPorId);
 
 export default router;
