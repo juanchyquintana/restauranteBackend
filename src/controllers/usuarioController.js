@@ -92,6 +92,7 @@ const iniciarSesion = async (req, res) => {
       mensaje: "¡Bienvenido! Sus Datos son correctos.",
       email,
       token,
+      tipoUsuario: existeUsuario.tipoUsuario
     });
   } catch (error) {
     console.log(error);
