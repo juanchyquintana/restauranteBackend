@@ -21,6 +21,19 @@ const obtenerPedidos = async (req, res) => {
     }
 }
 
+const obtenerPedidoPorId = async (req, res) => {
+    try {
+        const pedido = await Pedido.findById(req.params.id);
+        if (!pedido) {
+            return res.status(404).json({ mensaje: 'Pedido no encontrado.' });
+        }
+        res.json(pedido);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensaje: 'Error al obtener el pedido.' });
+    }
+}
+
 const editarPedido = async (req, res) => {
     try {
         const buscarPedido = await Pedido.findById(req.params.id)
@@ -40,5 +53,6 @@ const editarPedido = async (req, res) => {
 export {
     obtenerPedidos,
     editarPedido,
-    crearPedido
+    crearPedido,
+    obtenerPedidoPorId
 }
