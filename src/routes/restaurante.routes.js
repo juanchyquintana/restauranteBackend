@@ -18,6 +18,7 @@ import {
   editarPedido,
   crearPedido,
   obtenerPedidoPorId,
+  eliminarPedido,
 } from "../controllers/pedidosController.js";
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
@@ -52,6 +53,7 @@ router
 router
   .route("/pedidos/:id")
   .put([validacionPedidos], editarPedido)
-  .get(obtenerPedidoPorId);
+  .get(obtenerPedidoPorId)
+  .delete(eliminarPedido);
 
 export default router;

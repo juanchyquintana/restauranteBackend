@@ -57,9 +57,9 @@ const pedidosSchema = new mongoose.Schema({
   },
   total: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const Pedido = mongoose.model('Pedido', pedidosSchema);
+const Pedido = mongoose.model("Pedido", pedidosSchema);
 export default Pedido;
