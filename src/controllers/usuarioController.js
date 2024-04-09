@@ -50,6 +50,7 @@ const crearUsuario = async (req, res) => {
       .json({ mensaje: "Usuario creado exitosamente", usuario: nuevoUsuario });
   } catch (error) {
     console.log(error);
+    res.status(400).json({ mensaje: "No se pudo crear el usuario" });
   }
 };
 
