@@ -70,10 +70,15 @@ const borrarUsuario = async (req, res) => {
   }
 };
 
+const iniciarSesion = async (req, res) => {
+  res.send('funciona la ruta')
+}
+
 export {
   editarUsuario,
   obtenerUsuario,
   verUsuarios,
   crearUsuario,
   borrarUsuario,
+  iniciarSesion
 };
