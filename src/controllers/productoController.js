@@ -17,14 +17,14 @@ const editarProducto = async (req, res) => {
 
 const obtenerProducto = async (req, res) => {
   try {
-    console.log(req.params.id)
-    const productoBuscado = await Producto.findById(req.params.id)
-    res.status(200).json(productoBuscado)
+    console.log(req.params.id);
+    const productoBuscado = await Producto.findById(req.params.id);
+    res.status(200).json(productoBuscado);
   } catch (error) {
-    console.log(error)
-    res.status(404).json({mensaje: "No se encontro el producto solicitado"})
+    console.log(error);
+    res.status(404).json({ mensaje: "No se encontro el producto solicitado" });
   }
-}
+};
 
 const listarProductos = async (req, res) => {
   try {
@@ -53,5 +53,29 @@ const crearProducto = async (req, res) => {
   }
 };
 
-export { editarProducto, obtenerProducto, listarProductos, crearProducto };
+const borrarProducto = async (req, res) => {
+  try {
+    const buscarProducto = await Producto.findById(req.params.id);
+    if (!buscarProducto) {
+      return res.status(404).json({
+        mensaje: "No se pudo eliminar el producto, el id es incorrecto.",
+      });
+    }
+    await Producto.findByIdAndDelete(req.params.id);
 
+    res.status(200).json({ mensaje: "El producto fue eliminado exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrio un error al intentar borrar el producto" });
+  }
+};
+
+export {
+  editarProducto,
+  obtenerProducto,
+  listarProductos,
+  crearProducto,
+  borrarProducto,
+};
