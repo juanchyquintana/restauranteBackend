@@ -1,4 +1,6 @@
 import Usuario from "../database/models/Usuario.js";
+import bcrypt from "bcrypt";
+import generarJWT from "../helpers/generarJWT.js";
 
 const editarUsuario = async (req, res) => {
   try {
@@ -71,10 +73,38 @@ const borrarUsuario = async (req, res) => {
   }
 };
 
+const iniciarSesion = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const existeUsuario = await Usuario.findOne({ email });
+    const passwordValido = bcrypt.compareSync(password, existeUsuario.password);
+
+    if (!existeUsuario) {
+      return res.status(400).json({ mensaje: "Correo Incorrecto!" });
+    }
+
+    if (!passwordValido) {
+      return res.status(400).json({ mensaje: "Password Incorrecto!" });
+    }
+
+    const token = await generarJWT(existeUsuario._id, existeUsuario.email);
+    res.status(200).json({
+      mensaje: "¡Bienvenido! Sus Datos son correctos.",
+      email,
+      token,
+      tipoUsuario: existeUsuario.tipoUsuario
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: "Error al Intentar Loguear al Usuario" });
+  }
+};
+
 export {
   editarUsuario,
   obtenerUsuario,
   verUsuarios,
   crearUsuario,
   borrarUsuario,
+  iniciarSesion,
 };

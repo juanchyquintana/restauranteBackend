@@ -5,6 +5,7 @@ import {
   crearUsuario,
   borrarUsuario,
   verUsuarios,
+  iniciarSesion,
 } from "../controllers/usuarioController.js";
 import {
   editarProducto,
@@ -35,6 +36,10 @@ router
   .put([validacionesUsuario], editarUsuario)
   .get(obtenerUsuario)
   .delete(borrarUsuario);
+
+router
+  .route("/usuarios/login")
+  .post(iniciarSesion)
 
 router
   .route("/productos")
