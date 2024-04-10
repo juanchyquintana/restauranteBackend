@@ -14,7 +14,7 @@ const pedidosSchema = new mongoose.Schema({
   productos: [
     {
       producto: {
-        type: mongoose.Schema.Type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Producto",
         required: true,
       },
