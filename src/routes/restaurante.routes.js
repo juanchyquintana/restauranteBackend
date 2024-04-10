@@ -24,6 +24,7 @@ import {
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
 import validacionPedidos from "../helpers/validacionPedidos.js";
+import validarJWT from "../helpers/verificarJWT.js";
 
 const router = Router();
 
@@ -33,32 +34,30 @@ router
   .post([validacionesUsuario], crearUsuario);
 router
   .route("/usuarios/:id")
-  .put([validacionesUsuario], editarUsuario)
+  .put([validarJWT, validacionesUsuario], editarUsuario)
   .get(obtenerUsuario)
-  .delete(borrarUsuario);
+  .delete(validarJWT, borrarUsuario);
 
-router
-  .route("/usuarios/login")
-  .post(iniciarSesion)
+router.route("/usuarios/login").post(iniciarSesion);
 
 router
   .route("/productos")
   .get(listarProductos)
-  .post([validacionProducto], crearProducto);
+  .post([validarJWT, validacionProducto], crearProducto);
 router
   .route("/productos/:id")
-  .put([validacionProducto], editarProducto)
+  .put([validarJWT, validacionProducto], editarProducto)
   .get(obtenerProducto)
-  .delete(borrarProducto);
+  .delete(validarJWT, borrarProducto);
 
 router
   .route("/pedidos")
-  .post([validacionPedidos], crearPedido)
+  .post([validarJWT, validacionPedidos], crearPedido)
   .get(obtenerPedidos);
 router
   .route("/pedidos/:id")
-  .put([validacionPedidos], editarPedido)
+  .put([validarJWT, validacionPedidos], editarPedido)
   .get(obtenerPedidoPorId)
-  .delete(eliminarPedido);
+  .delete(validarJWT, eliminarPedido);
 
 export default router;

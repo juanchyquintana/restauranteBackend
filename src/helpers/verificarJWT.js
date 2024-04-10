@@ -1,11 +1,11 @@
-import jwt from 'jsonwebtoken';
-import 'dotenv/config';
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const validarJWT = (req, res, next) => {
   const token = req.header("x-token");
 
   if (!token) {
-    return res.status(401).json({ mensaje: "No hay token en la peticion"});
+    return res.status(401).json({ mensaje: "No hay token en la peticion" });
   }
 
   try {
@@ -13,7 +13,6 @@ const validarJWT = (req, res, next) => {
     req._id = payload.uid;
     req.email = payload.email;
     next();
-
   } catch (error) {
     console.error("Error al verificar el token:", error.message);
 

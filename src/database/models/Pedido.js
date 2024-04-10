@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const pedidosSchema = new mongoose.Schema({
   usuario: {
-    type: String, // Luego cambiar por mongoose.Schema.Types.ObjectId
-    // ref: 'Usuario',
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Usuario",
     required: true,
   },
   fecha: {
@@ -14,8 +14,8 @@ const pedidosSchema = new mongoose.Schema({
   productos: [
     {
       producto: {
-        type: String, // luego cambiar por mongoose.Schema.Type.ObjectId
-        // ref: 'Producto',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Producto",
         required: true,
       },
       cantidad: {
