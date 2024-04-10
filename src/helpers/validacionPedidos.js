@@ -34,15 +34,23 @@ const validacionPedidos = [
       'El tipo de entrega debe ser una de las siguientes opciones: "take-away", "delivery", "bar".'
     ),
   check("lat")
+    .if((value, { req }) => req.body.tipoEntrega === "delivery")
     .notEmpty()
-    .withMessage("La latitud es un dato obligatorio para entregas a domicilio.")
-    .if((value, { req }) => req.body.tipoEntrega === "delivery"),
+    .withMessage(
+      "La latitud es un dato obligatorio para entregas a domicilio."
+    ),
   check("lng")
+    .if((value, { req }) => req.body.tipoEntrega === "delivery")
     .notEmpty()
     .withMessage(
       "La longitud es un dato obligatorio para entregas a domicilio."
-    )
-    .if((value, { req }) => req.body.tipoEntrega === "delivery"),
+    ),
+  check("calle")
+    .if((value, { req }) => req.body.tipoEntrega === "delivery")
+    .notEmpty()
+    .withMessage(
+      "La calle es un dato obligatorio."
+    ),
   check("telefonoContacto")
     .notEmpty()
     .withMessage("El teléfono de contacto es un dato obligatorio."),

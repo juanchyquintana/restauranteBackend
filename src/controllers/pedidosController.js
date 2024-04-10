@@ -8,7 +8,7 @@ const crearPedido = async (req, res) => {
     res.status(201).json({ mensaje: "El pedido fue creado correctamente." });
   } catch (error) {
     console.log(error);
-    res.satus(400).json({ mensaje: "No se pudo crear el pedido." });
+    res.status(400).json({ mensaje: "No se pudo crear el pedido." });
   }
 };
 

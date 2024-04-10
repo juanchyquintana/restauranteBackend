@@ -52,7 +52,7 @@ router
 
 router
   .route("/pedidos")
-  .post([validarJWT, validacionPedidos], crearPedido)
+  .post([validacionPedidos], crearPedido)
   .get(obtenerPedidos);
 router
   .route("/pedidos/:id")
