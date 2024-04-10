@@ -1,10 +1,11 @@
 import Pedido from "../database/models/Pedido.js";
+import Usuario from "../database/models/Usuario.js";
 
 const crearPedido = async (req, res) => {
   try {
     const nuevoPedido = new Pedido(req.body);
     await nuevoPedido.save();
-    
+
     res.status(201).json({ mensaje: "El pedido fue creado correctamente." });
   } catch (error) {
     console.log(error);
@@ -15,7 +16,7 @@ const crearPedido = async (req, res) => {
 const obtenerPedidos = async (req, res) => {
   try {
     const pedidos = await Pedido.find()
-      .populate("usuario")
+      .populate("Usuario")
       .populate("productos.producto");
 
     res.json(pedidos);
@@ -27,7 +28,10 @@ const obtenerPedidos = async (req, res) => {
 
 const obtenerPedidoPorId = async (req, res) => {
   try {
-    const pedido = await Pedido.findById(req.params.id);
+    const pedido = await Pedido.findById(req.params.id)
+      .populate("usuario", "-password -tipoUsuario -__v -estado")
+      .populate("productos.producto", "-__v");
+
     if (!pedido) {
       return res.status(404).json({ mensaje: "Pedido no encontrado." });
     }

@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import Usuario from "./Usuario.js";
+import Producto from "./Producto.js";
 
 const pedidosSchema = new mongoose.Schema({
   usuario: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Usuario",
+    ref: Usuario,
     required: true,
   },
   fecha: {
@@ -15,7 +17,7 @@ const pedidosSchema = new mongoose.Schema({
     {
       producto: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Producto",
+        ref: Producto,
         required: true,
       },
       cantidad: {
