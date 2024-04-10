@@ -7,7 +7,7 @@ const usuarioSchema = new mongoose.Schema({
     required: true,
     trim: true,
     minLength: 3,
-    maxLength: 100
+    maxLength: 100,
   },
   email: {
     type: String,
@@ -16,11 +16,12 @@ const usuarioSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     validate: {
-        validator: (value) => {
-            const pattern = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i
-            return pattern.test(value)
-        }
-    }
+      validator: (value) => {
+        const pattern =
+          /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
+        return pattern.test(value);
+      },
+    },
   },
   password: {
     type: String,

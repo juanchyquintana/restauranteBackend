@@ -45,6 +45,7 @@ const crearUsuario = async (req, res) => {
   try {
     const nuevoUsuario = new Usuario(req.body);
     await nuevoUsuario.save();
+    
     res
       .status(201)
       .json({ mensaje: "Usuario creado exitosamente", usuario: nuevoUsuario });

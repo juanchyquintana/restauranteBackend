@@ -24,6 +24,7 @@ import {
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
 import validacionPedidos from "../helpers/validacionPedidos.js";
+import validarJWT from "../helpers/verificarJWT.js";
 
 const router = Router();
 
@@ -37,9 +38,7 @@ router
   .get(obtenerUsuario)
   .delete(borrarUsuario);
 
-router
-  .route("/usuarios/login")
-  .post(iniciarSesion)
+router.route("/usuarios/login").post(iniciarSesion);
 
 router
   .route("/productos")

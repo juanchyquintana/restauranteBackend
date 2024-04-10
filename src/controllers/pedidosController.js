@@ -4,6 +4,7 @@ const crearPedido = async (req, res) => {
   try {
     const nuevoPedido = new Pedido(req.body);
     await nuevoPedido.save();
+    
     res.status(201).json({ mensaje: "El pedido fue creado correctamente." });
   } catch (error) {
     console.log(error);
@@ -16,6 +17,7 @@ const obtenerPedidos = async (req, res) => {
     const pedidos = await Pedido.find()
       .populate("usuario")
       .populate("productos.producto");
+
     res.json(pedidos);
   } catch (error) {
     console.log(error);
@@ -29,6 +31,7 @@ const obtenerPedidoPorId = async (req, res) => {
     if (!pedido) {
       return res.status(404).json({ mensaje: "Pedido no encontrado." });
     }
+
     res.json(pedido);
   } catch (error) {
     console.log(error);
@@ -57,6 +60,7 @@ const eliminarPedido = async (req, res) => {
     if (!pedidoEliminado) {
       return res.status(404).json({ mensaje: "Pedido no encontrado." });
     }
+
     res.json({ mensaje: "Pedido eliminado correctamente." });
   } catch (error) {
     console.log(error);
