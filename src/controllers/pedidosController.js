@@ -16,7 +16,7 @@ const crearPedido = async (req, res) => {
 const obtenerPedidos = async (req, res) => {
   try {
     const pedidos = await Pedido.find()
-      .populate("Usuario")
+      .populate("usuario", "-password -__v")
       .populate("productos.producto");
 
     res.json(pedidos);
