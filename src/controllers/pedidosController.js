@@ -72,10 +72,47 @@ const eliminarPedido = async (req, res) => {
   }
 };
 
+const obtenerGananciasDelDia = async (req, res) => {
+  try {
+    const ganancias = await Pedido.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$total" },
+        },
+      },
+    ]);
+    res.status(200).json({ ganancias: ganancias[0]?.total || 0 });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrió un error al obtener las ganancias del día" });
+  }
+};
+
+const obtenerCantidadPedidosDia = async (req, res) => {
+  try {
+      const fechaHoy = new Date();
+      fechaHoy.setHours(0, 0, 0, 0);
+
+      const cantidadPedidos = await Pedido.countDocuments({
+          fecha: { $gte: fechaHoy }
+      });
+
+      res.status(200).json({ cantidad: cantidadPedidos });
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ mensaje: "Error al obtener la cantidad de pedidos del día." });
+  }
+};
+
 export {
   obtenerPedidos,
   editarPedido,
   crearPedido,
   obtenerPedidoPorId,
   eliminarPedido,
+  obtenerGananciasDelDia,
+  obtenerCantidadPedidosDia
 };
