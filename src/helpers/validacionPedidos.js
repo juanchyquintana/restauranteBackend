@@ -52,9 +52,12 @@ const validacionPedidos = [
       "La calle es un dato obligatorio."
     ),
   check("telefonoContacto")
+    .if((value, { req }) => req.body.tipoEntrega === "delivery")
     .notEmpty()
     .withMessage("El teléfono de contacto es un dato obligatorio."),
-  check("notas").optional(),
+  check("notas")
+  .optional()
+  .isLength({max: 300}),
   check("total")
     .notEmpty()
     .withMessage("El total es un dato obligatorio.")

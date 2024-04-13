@@ -47,17 +47,19 @@ const pedidosSchema = new mongoose.Schema({
     type: Number,
     required: function () {
       return this.tipoEntrega === "delivery";
-    }
+    },
   },
   calle: {
     type: String,
     required: function () {
       return this.tipoEntrega === "delivery";
-    }
+    },
   },
   telefonoContacto: {
-    type: String,
-    required: true,
+    type: Number,
+    required: function () {
+      return this.tipoEntrega === "delivery";
+    },
   },
   notas: {
     type: String,
