@@ -1,5 +1,6 @@
 import Pedido from "../database/models/Pedido.js";
 import Usuario from "../database/models/Usuario.js";
+import Caja from "../database/models/Caja.js";
 
 const crearPedido = async (req, res) => {
   try {
@@ -82,7 +83,8 @@ const obtenerGananciasDelDia = async (req, res) => {
         },
       },
     ]);
-    res.status(200).json({ ganancias: ganancias[0]?.total || 0 });
+
+    return ganancias[0]?.total || 0;
   } catch (error) {
     console.log(error);
     res
@@ -93,17 +95,34 @@ const obtenerGananciasDelDia = async (req, res) => {
 
 const obtenerCantidadPedidosDia = async (req, res) => {
   try {
-      const fechaHoy = new Date();
-      fechaHoy.setHours(0, 0, 0, 0);
+    const fechaHoy = new Date();
+    fechaHoy.setHours(0, 0, 0, 0);
 
-      const cantidadPedidos = await Pedido.countDocuments({
-          fecha: { $gte: fechaHoy }
-      });
+    const cantidadPedidos = await Pedido.countDocuments({
+      fecha: { $gte: fechaHoy },
+    });
 
-      res.status(200).json({ cantidad: cantidadPedidos });
+    return cantidadPedidos
   } catch (error) {
-      console.log(error);
-      res.status(500).json({ mensaje: "Error al obtener la cantidad de pedidos del día." });
+    console.log(error);
+    res
+      .status(500)
+      .json({ mensaje: "Error al obtener la cantidad de pedidos del día." });
+  }
+};
+
+const cerrarCaja = async (req, res) => {
+  try {
+    const ganancias = await obtenerGananciasDelDia();
+    const cantidadPedidos = await obtenerCantidadPedidosDia();
+
+    const caja = new Caja({ ganancias, cantidadPedidos });
+    await caja.save()
+
+    res.status(200).json({ mensaje: "Caja Cerrada Exitosamente!", datosCaja: caja });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: "Error al Cerrar la Caja" });
   }
 };
 
@@ -114,5 +133,6 @@ export {
   obtenerPedidoPorId,
   eliminarPedido,
   obtenerGananciasDelDia,
-  obtenerCantidadPedidosDia
+  obtenerCantidadPedidosDia,
+  cerrarCaja,
 };
