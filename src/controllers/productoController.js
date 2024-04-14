@@ -2,7 +2,7 @@ import Producto from "../database/models/Producto.js";
 
 const editarProducto = async (req, res) => {
   try {
-    const buscarProducto = await Producto.findByID(req.params.id);
+    const buscarProducto = await Producto.findById(req.params.id);
     if (!buscarProducto) {
       return res.status(404).json({ mensaje: "Producto No Encontrado" });
     }
