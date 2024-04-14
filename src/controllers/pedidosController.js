@@ -113,7 +113,7 @@ const obtenerCantidadPedidosDia = async (req, res) => {
 
 const cerrarCaja = async (req, res) => {
   try {
-    const caja = new Caja({ ganancias, cantidadPedidos });
+    const caja = new Caja(req.body);
     await caja.save()
 
     res.status(200).json({ mensaje: "Caja Cerrada Exitosamente!", datosCaja: caja });
