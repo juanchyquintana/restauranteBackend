@@ -84,7 +84,7 @@ const obtenerGananciasDelDia = async (req, res) => {
       },
     ]);
 
-    return ganancias[0]?.total || 0;
+    res.status(200).json({ ganancias: ganancias[0]?.total || 0 });
   } catch (error) {
     console.log(error);
     res
@@ -102,7 +102,7 @@ const obtenerCantidadPedidosDia = async (req, res) => {
       fecha: { $gte: fechaHoy },
     });
 
-    return cantidadPedidos
+    res.status(200).json({ cantidad: cantidadPedidos });
   } catch (error) {
     console.log(error);
     res
@@ -113,9 +113,6 @@ const obtenerCantidadPedidosDia = async (req, res) => {
 
 const cerrarCaja = async (req, res) => {
   try {
-    const ganancias = await obtenerGananciasDelDia();
-    const cantidadPedidos = await obtenerCantidadPedidosDia();
-
     const caja = new Caja({ ganancias, cantidadPedidos });
     await caja.save()
 
