@@ -28,7 +28,7 @@ const pedidosSchema = new mongoose.Schema({
   ],
   estado: {
     type: String,
-    enum: ["pendiente", "en proceso", "enviado", "entregado", "cancelado"],
+    enum: ["pendiente", "en proceso", "terminado", "enviado", "entregado", "cancelado"],
     default: "pendiente",
     required: true,
   },
