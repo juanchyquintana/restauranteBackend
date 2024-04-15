@@ -22,7 +22,8 @@ import {
   eliminarPedido,
   obtenerGananciasDelDia,
   obtenerCantidadPedidosDia,
-  cerrarCaja
+  cerrarCaja,
+  obtenerPedidosPorUsuario
 } from "../controllers/pedidosController.js";
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
@@ -62,6 +63,7 @@ router
   .put([validarJWT, validacionPedidos], editarPedido)
   .get(obtenerPedidoPorId)
   .delete(validarJWT, eliminarPedido);
+router.route("/pedidosUsuario/:id").get(obtenerPedidosPorUsuario)
 
 router.route("/ganancias-dia").get(obtenerGananciasDelDia)
 router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);

@@ -123,6 +123,16 @@ const cerrarCaja = async (req, res) => {
   }
 };
 
+const obtenerPedidosPorUsuario = async (req, res) => {
+  try {
+    const pedidos = await Pedido.find({ usuario: req.params.id }).populate('productos.producto');
+    res.status(200).json({ mensaje: "Pedidos encontrados", pedidos });
+  } catch (error) {
+    console.error("Error al obtener pedidos:", error);
+    res.status(500).json({ mensaje: "Error al obtener los pedidos del usuario" });
+  }
+};
+
 export {
   obtenerPedidos,
   editarPedido,
@@ -132,4 +142,5 @@ export {
   obtenerGananciasDelDia,
   obtenerCantidadPedidosDia,
   cerrarCaja,
+  obtenerPedidosPorUsuario
 };
