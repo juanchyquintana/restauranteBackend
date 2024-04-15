@@ -20,6 +20,9 @@ import {
   crearPedido,
   obtenerPedidoPorId,
   eliminarPedido,
+  obtenerGananciasDelDia,
+  obtenerCantidadPedidosDia,
+  cerrarCaja
 } from "../controllers/pedidosController.js";
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
@@ -52,12 +55,16 @@ router
 
 router
   .route("/pedidos")
-  .post([validarJWT, validacionPedidos], crearPedido)
+  .post([validacionPedidos], crearPedido)
   .get(obtenerPedidos);
 router
   .route("/pedidos/:id")
   .put([validarJWT, validacionPedidos], editarPedido)
   .get(obtenerPedidoPorId)
   .delete(validarJWT, eliminarPedido);
+
+router.route("/ganancias-dia").get(obtenerGananciasDelDia)
+router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
+router.route('/cerrar-caja').post(cerrarCaja)
 
 export default router;

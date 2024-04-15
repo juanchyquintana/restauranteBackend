@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import Usuario from "./Usuario.js";
+import Producto from "./Producto.js";
 
 const pedidosSchema = new mongoose.Schema({
   usuario: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Usuario",
+    ref: Usuario,
     required: true,
   },
   fecha: {
@@ -15,7 +17,7 @@ const pedidosSchema = new mongoose.Schema({
     {
       producto: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Producto",
+        ref: Producto,
         required: true,
       },
       cantidad: {
@@ -26,7 +28,7 @@ const pedidosSchema = new mongoose.Schema({
   ],
   estado: {
     type: String,
-    enum: ["pendiente", "en proceso", "enviado", "entregado", "cancelado"],
+    enum: ["pendiente", "en proceso", "terminado", "enviado", "entregado", "cancelado"],
     default: "pendiente",
     required: true,
   },
@@ -47,9 +49,17 @@ const pedidosSchema = new mongoose.Schema({
       return this.tipoEntrega === "delivery";
     },
   },
-  telefonoContacto: {
+  calle: {
     type: String,
-    required: true,
+    required: function () {
+      return this.tipoEntrega === "delivery";
+    },
+  },
+  telefonoContacto: {
+    type: Number,
+    required: function () {
+      return this.tipoEntrega === "delivery";
+    },
   },
   notas: {
     type: String,

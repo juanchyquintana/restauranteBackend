@@ -1,21 +1,23 @@
 import Pedido from "../database/models/Pedido.js";
+import Usuario from "../database/models/Usuario.js";
+import Caja from "../database/models/Caja.js";
 
 const crearPedido = async (req, res) => {
   try {
     const nuevoPedido = new Pedido(req.body);
     await nuevoPedido.save();
-    
+
     res.status(201).json({ mensaje: "El pedido fue creado correctamente." });
   } catch (error) {
     console.log(error);
-    res.satus(400).json({ mensaje: "No se pudo crear el pedido." });
+    res.status(400).json({ mensaje: "No se pudo crear el pedido." });
   }
 };
 
 const obtenerPedidos = async (req, res) => {
   try {
     const pedidos = await Pedido.find()
-      .populate("usuario")
+      .populate("usuario", "-password -__v")
       .populate("productos.producto");
 
     res.json(pedidos);
@@ -27,7 +29,10 @@ const obtenerPedidos = async (req, res) => {
 
 const obtenerPedidoPorId = async (req, res) => {
   try {
-    const pedido = await Pedido.findById(req.params.id);
+    const pedido = await Pedido.findById(req.params.id)
+      .populate("usuario", "-password -tipoUsuario -__v -estado")
+      .populate("productos.producto", "-__v");
+
     if (!pedido) {
       return res.status(404).json({ mensaje: "Pedido no encontrado." });
     }
@@ -68,10 +73,63 @@ const eliminarPedido = async (req, res) => {
   }
 };
 
+const obtenerGananciasDelDia = async (req, res) => {
+  try {
+    const ganancias = await Pedido.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$total" },
+        },
+      },
+    ]);
+
+    res.status(200).json({ ganancias: ganancias[0]?.total || 0 });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrió un error al obtener las ganancias del día" });
+  }
+};
+
+const obtenerCantidadPedidosDia = async (req, res) => {
+  try {
+    const fechaHoy = new Date();
+    fechaHoy.setHours(0, 0, 0, 0);
+
+    const cantidadPedidos = await Pedido.countDocuments({
+      fecha: { $gte: fechaHoy },
+    });
+
+    res.status(200).json({ cantidad: cantidadPedidos });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ mensaje: "Error al obtener la cantidad de pedidos del día." });
+  }
+};
+
+const cerrarCaja = async (req, res) => {
+  try {
+    const caja = new Caja(req.body);
+    await caja.save()
+
+    res.status(200).json({ mensaje: "Caja Cerrada Exitosamente!", datosCaja: caja });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: "Error al Cerrar la Caja" });
+  }
+};
+
 export {
   obtenerPedidos,
   editarPedido,
   crearPedido,
   obtenerPedidoPorId,
   eliminarPedido,
+  obtenerGananciasDelDia,
+  obtenerCantidadPedidosDia,
+  cerrarCaja,
 };
