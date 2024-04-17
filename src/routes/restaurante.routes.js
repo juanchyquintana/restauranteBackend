@@ -25,12 +25,13 @@ import {
   cerrarCaja
 } from "../controllers/pedidosController.js";
 import { 
-  crearConsulta 
+  crearConsulta, 
+  listarConsultas
 } from "../controllers/consultaController.js"
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
 import validacionPedidos from "../helpers/validacionPedidos.js";
-
+import validacionConsulta from "../helpers/validacionConsulta.js";
 import validarJWT from "../helpers/verificarJWT.js";
 
 
@@ -72,6 +73,6 @@ router.route("/ganancias-dia").get(obtenerGananciasDelDia)
 router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
 router.route('/cerrar-caja').post(cerrarCaja)
 
-router.route("/consulta").put(crearConsulta)
+router.route("/consultas").post(validacionConsulta, crearConsulta).get(listarConsultas)
 
 export default router;

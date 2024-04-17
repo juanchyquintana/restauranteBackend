@@ -14,3 +14,15 @@ export const crearConsulta = async (req, res)=>{
         });
     }
 };
+
+export const listarConsultas = async (req, res) => {
+    try {
+      const consultas = await Consulta.find();
+      res.status(200).json(consultas);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(404)
+        .json({ mensaje: "No se pudo encontrar la lista de consultas" });
+    }
+  };
