@@ -67,4 +67,6 @@ router.route("/ganancias-dia").get(obtenerGananciasDelDia)
 router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
 router.route('/cerrar-caja').post(cerrarCaja)
 
+router.route("/consulta")
+
 export default router;
