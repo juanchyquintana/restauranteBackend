@@ -28,6 +28,7 @@ import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
 import validacionPedidos from "../helpers/validacionPedidos.js";
 import validarJWT from "../helpers/verificarJWT.js";
+import crearConsulta from "../controllers/consultaController.js"
 
 const router = Router();
 
@@ -67,6 +68,6 @@ router.route("/ganancias-dia").get(obtenerGananciasDelDia)
 router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
 router.route('/cerrar-caja').post(cerrarCaja)
 
-router.route("/consulta")
+router.route("/consulta").push(crearConsulta)
 
 export default router;
