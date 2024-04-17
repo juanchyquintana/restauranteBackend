@@ -26,3 +26,22 @@ export const listarConsultas = async (req, res) => {
         .json({ mensaje: "No se pudo encontrar la lista de consultas" });
     }
   };
+
+  export const borrarConsulta = async (req, res) => {
+    try {
+      const buscarConsulta = await Consulta.findById(req.params.id);
+      if (!buscarConsulta) {
+        return res.status(404).json({
+          mensaje: "No se pudo eliminar la consulta, el id es incorrecto.",
+        });
+      }
+  
+      await Consulta.findByIdAndDelete(req.params.id);
+      res.status(200).json({ mensaje: "La consulta fue eliminado exitosamente" });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ mensaje: "Ocurrio un error al intentar borrar la consulta" });
+    }
+  };

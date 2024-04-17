@@ -25,6 +25,7 @@ import {
   cerrarCaja
 } from "../controllers/pedidosController.js";
 import { 
+  borrarConsulta,
   crearConsulta, 
   listarConsultas
 } from "../controllers/consultaController.js"
@@ -74,5 +75,5 @@ router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
 router.route('/cerrar-caja').post(cerrarCaja)
 
 router.route("/consultas").post(validacionConsulta, crearConsulta).get(listarConsultas)
-
+router.route("/consultas/:id").delete(borrarConsulta)
 export default router;
