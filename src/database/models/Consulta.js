@@ -10,8 +10,7 @@ const consultaSchema = new mongoose.Schema({
     email:{
         type: String,
         lowercase: true,
-        required: true,
-        unique: true,
+        // unique: true,
         trim: true,
         validate: {
             validator: (value) => {
@@ -26,8 +25,12 @@ const consultaSchema = new mongoose.Schema({
         require: true,
         minLength: 10,
         maxLength: 500
-    }
-
+    },
+    fecha: {
+        type: Date,
+        default: Date.now(),
+        required: true,
+      }
 });
 
 const Consulta = mongoose.model("consulta",consultaSchema);
