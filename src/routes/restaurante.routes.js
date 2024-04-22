@@ -22,16 +22,17 @@ import {
   eliminarPedido,
   obtenerGananciasDelDia,
   obtenerCantidadPedidosDia,
-  crearCaja,
-  editarCaja,
-  filtrandoFechaCaja,
-  cerrarCaja,
 } from "../controllers/pedidosController.js";
 import {
   borrarConsulta,
   crearConsulta,
   listarConsultas,
 } from "../controllers/consultaController.js";
+import {
+  crearCaja,
+  editarCaja,
+  filtrandoFechaCaja,
+} from "../controllers/cajaController.js";
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
 import validacionPedidos from "../helpers/validacionPedidos.js";
@@ -75,9 +76,8 @@ router
 router.route("/ganancias-dia").get(obtenerGananciasDelDia);
 router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
 
-router.post("/caja", crearCaja);
-router.get("/caja/:fecha", filtrandoFechaCaja);
-router.put("/caja/:fecha", editarCaja);
+router.route("/caja").post(crearCaja);
+router.route("/caja/:fecha").get(filtrandoFechaCaja).put(editarCaja);
 
 router
   .route("/consultas")

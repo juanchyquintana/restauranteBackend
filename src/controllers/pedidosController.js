@@ -1,5 +1,4 @@
 import Pedido from "../database/models/Pedido.js";
-import Caja from "../database/models/Caja.js";
 
 const crearPedido = async (req, res) => {
   try {
@@ -110,81 +109,6 @@ const obtenerCantidadPedidosDia = async (req, res) => {
   }
 };
 
-const cerrarCaja = async (req, res) => {
-  try {
-    const caja = new Caja(req.body);
-    await caja.save()
-
-    res.status(200).json({ mensaje: "Caja Cerrada Exitosamente!", datosCaja: caja });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ mensaje: "Error al Cerrar la Caja" });
-  }
-};
-
-const crearCaja = async (req, res) => {
-  const { fecha } = req.params;
-  const { datosCaja } = req.body;
-
-  const fechaActual = new Date(fecha);
-  const soloFecha = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate());
-  const fechaFiltro = soloFecha.toISOString();
-
-  console.log(fechaActual)
-
-  try {
-    const cajaExistente = await Caja.findOne({ fecha });
-
-    if (cajaExistente) {
-      return res.status(400).json({ mensaje: "Ya existe una caja para esa fecha." });
-    }
-
-    const nuevaCaja = new Caja({
-      fecha,
-      ...datosCaja,
-    });
-
-    await nuevaCaja.save();
-
-    res.status(201).json({ mensaje: "Caja creada exitosamente." });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensaje: "Error al crear la caja." });
-  }
-};
-
-const editarCaja = async (req, res) => {
-  const { fecha } = req.params;
-  const { datosCaja } = req.body;
-
-  try {
-    const cajaExistente = await Caja.findOne({ fecha });
-
-    if (!cajaExistente) {
-      return res.status(404).json({ mensaje: "No existe una caja para esa fecha." });
-    }
-
-    await Caja.findOneAndUpdate({ fecha }, datosCaja);
-
-    res.status(200).json({ mensaje: "Caja editada exitosamente." });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensaje: "Error al editar la caja." });
-  }
-};
-
-const filtrandoFechaCaja = async (req, res) => {
-  const { fecha } = req.query;
-
-  try {
-    const cajas = fecha ? await Caja.find({ fecha }) : await Caja.find();
-    res.json(cajas);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensaje: "Error al filtrar cajas." });
-  }
-}
-
 export {
   obtenerPedidos,
   editarPedido,
@@ -193,8 +117,4 @@ export {
   eliminarPedido,
   obtenerGananciasDelDia,
   obtenerCantidadPedidosDia,
-  cerrarCaja,
-  crearCaja,
-  editarCaja,
-  filtrandoFechaCaja
 };
