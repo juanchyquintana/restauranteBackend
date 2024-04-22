@@ -1,6 +1,4 @@
 import Pedido from "../database/models/Pedido.js";
-import Usuario from "../database/models/Usuario.js";
-import Caja from "../database/models/Caja.js";
 
 const crearPedido = async (req, res) => {
   try {
@@ -111,18 +109,6 @@ const obtenerCantidadPedidosDia = async (req, res) => {
   }
 };
 
-const cerrarCaja = async (req, res) => {
-  try {
-    const caja = new Caja(req.body);
-    await caja.save()
-
-    res.status(200).json({ mensaje: "Caja Cerrada Exitosamente!", datosCaja: caja });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ mensaje: "Error al Cerrar la Caja" });
-  }
-};
-
 export {
   obtenerPedidos,
   editarPedido,
@@ -131,5 +117,4 @@ export {
   eliminarPedido,
   obtenerGananciasDelDia,
   obtenerCantidadPedidosDia,
-  cerrarCaja,
 };

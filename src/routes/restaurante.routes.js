@@ -22,19 +22,23 @@ import {
   eliminarPedido,
   obtenerGananciasDelDia,
   obtenerCantidadPedidosDia,
-  cerrarCaja
 } from "../controllers/pedidosController.js";
-import { 
+import {
   borrarConsulta,
-  crearConsulta, 
-  listarConsultas
-} from "../controllers/consultaController.js"
+  crearConsulta,
+  listarConsultas,
+} from "../controllers/consultaController.js";
+import {
+  crearCaja,
+  editarCaja,
+  filtrandoFechaCaja,
+} from "../controllers/cajaController.js";
 import validacionesUsuario from "../helpers/validacionUsuario.js";
 import validacionProducto from "../helpers/validacionProducto.js";
 import validacionPedidos from "../helpers/validacionPedidos.js";
 import validacionConsulta from "../helpers/validacionConsulta.js";
 import validarJWT from "../helpers/verificarJWT.js";
-
+import validacionCaja from "../helpers/validacionCaja.js";
 
 const router = Router();
 
@@ -70,10 +74,15 @@ router
   .get(obtenerPedidoPorId)
   .delete(validarJWT, eliminarPedido);
 
-router.route("/ganancias-dia").get(obtenerGananciasDelDia)
+router.route("/ganancias-dia").get(obtenerGananciasDelDia);
 router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
-router.route('/cerrar-caja').post(cerrarCaja)
 
-router.route("/consultas").post(validacionConsulta, crearConsulta).get(listarConsultas)
-router.route("/consultas/:id").delete(borrarConsulta)
+router.route("/caja").post(crearCaja);
+router.route("/caja/:fecha").get(filtrandoFechaCaja).put([validacionCaja], editarCaja);
+
+router
+  .route("/consultas")
+  .post(validacionConsulta, crearConsulta)
+  .get(listarConsultas);
+router.route("/consultas/:id").delete(borrarConsulta);
 export default router;
