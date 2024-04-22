@@ -35,10 +35,13 @@ const crearCaja = async (req, res) => {
 
 const editarCaja = async (req, res) => {
   const { fecha } = req.params;
-  const { datosCaja } = req.body;
+  const datosCaja = req.body;
+
+  // console.log(datosCaja)
 
   try {
-    const cajaExistente = await Caja.findOne({ fecha });
+    const cajaExistente = await Caja.findOne({ fechaCierre: fecha });
+    // console.log(cajaExistente);
 
     if (!cajaExistente) {
       return res
@@ -46,7 +49,14 @@ const editarCaja = async (req, res) => {
         .json({ mensaje: "No existe una caja para esa fecha." });
     }
 
-    await Caja.findOneAndUpdate({ fecha }, datosCaja);
+    await Caja.findOneAndUpdate(
+      { fechaCierre: fecha },
+      {
+        ganancias: datosCaja.ganancias,
+        cantidadPedidos: parseInt(datosCaja.cantidadPedidos.length),
+        fechaCierre: datosCaja.fechaCierre,
+      }
+    );
 
     res.status(200).json({ mensaje: "Caja editada exitosamente." });
   } catch (error) {

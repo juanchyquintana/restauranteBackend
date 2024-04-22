@@ -38,6 +38,7 @@ import validacionProducto from "../helpers/validacionProducto.js";
 import validacionPedidos from "../helpers/validacionPedidos.js";
 import validacionConsulta from "../helpers/validacionConsulta.js";
 import validarJWT from "../helpers/verificarJWT.js";
+import validacionCaja from "../helpers/validacionCaja.js";
 
 const router = Router();
 
@@ -77,7 +78,7 @@ router.route("/ganancias-dia").get(obtenerGananciasDelDia);
 router.route("/pedidos-dia").get(obtenerCantidadPedidosDia);
 
 router.route("/caja").post(crearCaja);
-router.route("/caja/:fecha").get(filtrandoFechaCaja).put(editarCaja);
+router.route("/caja/:fecha").get(filtrandoFechaCaja).put([validacionCaja], editarCaja);
 
 router
   .route("/consultas")
