@@ -7,5 +7,5 @@ mongoose.connect(mongoBDD);
 
 const datosDeLaConexion = mongoose.connection;
 datosDeLaConexion.once('open', ()=>{
-    console.log('Base de Datos Conectada perro')
+    console.log('Base de datos conectada')
 })
